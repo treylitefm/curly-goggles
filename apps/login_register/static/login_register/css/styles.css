@@ -1,0 +1,22 @@
+.login-register {
+   width: 500px;
+   border: 3px solid black;
+   padding: 5px 25px 25px 25px;
+   margin-right: 30px;
+}
+
+form button {
+    width: 50%;
+}
+
+form.edit {
+   border: 3px solid black;
+   padding: 5px 25px 25px 25px;
+   margin-bottom: 25px;
+}
+
+.error {
+    color: white;
+    background: red;
+    border-radius: 3px;
+}

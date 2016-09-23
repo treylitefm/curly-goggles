@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'login_register/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'login_register/css/styles.css' %}">
+         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="{% static 'login_register/js/jquery.min.js' %}"></script>
+        <script src="{% static 'login_register/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'login_register/js/script.js' %}"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    </head>
+    <body>
+        <div class="navbar navbar-inverse">
+            <div class="container">
+                <a class="navbar-brand">Welcome!</a>
+            </div>
+        </div>
+        <div class="container">
+                <form class="login-register col-md-5" method="post" action="register">
+                    <h2>Register</h2>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Name:</label> 
+                        <input type="text" name="name" class="form-control" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Alias:</label> 
+                        <input type="text" name="alias" class="form-control" placeholder="Alias">
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label> 
+                        <input type="text" name="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label> 
+                        <input type="password" name="password" class="form-control" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label>Password Confirm:</label> 
+                        <input type="password" name="password_confirm" class="form-control" placeholder="Password Confirm">
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth:</label> 
+                        <input type="text" name="birth_date" class="datepicker form-control" placeholder="Date of Birth">
+                    </div>
+                    <button type="submit" class="btn btn-info center-block">Register</button>
+                    {% if messages %}
+                    <br>
+                    {% for message in messages %}
+                        {% if 'register' in message.tags %} 
+                        <p class="{{ message.tags }} text-center">{{ message }}<p>
+                        {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </form>
+                <form class="login-register col-md-5" method="post" action="login">
+                    <h2>Login</h2>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Email:</label> 
+                        <input type="text" name="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label> 
+                        <input type="password" name="password" class="form-control" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-info center-block">Login</button>
+                    {% if messages %}
+                    <br>
+                    {% for message in messages %}
+                        {% if 'login' in message.tags %} 
+                        <p class="{{ message.tags }} text-center">{{ message }}<p>
+                        {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </form>
+        </div>
+    </body>
+</html>
