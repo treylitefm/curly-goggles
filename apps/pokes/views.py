@@ -5,16 +5,19 @@ from ..login_register.models import User
 from .models import Poke
 
 def index(request):
-    print request.session['user_id'], 'session object'
     if 'user_id' not in request.session:
         return redirect(reverse('login_register:index'))
+
+    pokes = Poke.objects.filter(receiving_poke_id=request.session['user_id'])
+    count_unique_pokes = []
+    for p in pokes:
+        count_unique_pokes.append(p.sending_poke_id)
+
     context = {
         'auth_user': User.objects.get(id=request.session['user_id']),
         'users': User.objects.exclude(id=request.session['user_id']),
-        'poked_by_total': User.objects.filter(id=request.session['user_id']).values('sending_poke__sending_poke_id').annotate(total=Count('sending_poke__sending_poke_id'))
+        'poked_by_total': len(set(count_unique_pokes)) #tried a gazillion different orm queries, but i cant get the syntax quite right; ultimately, this is the query i want to execute: select receiving_poke_id,count(distinct sending_poke_id) from pokes where receiving_poke_id=2 group by receiving_poke_id;
     } 
-
-    print context['poked_by_total'][0]['total']
 
     return render(request, 'pokes/index.html', context)
 

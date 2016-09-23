@@ -20,7 +20,11 @@
             </div>
         </div>
         <div class="container">
-            <h2>{{ auth_user.receiving_poke.distinct.count }} people poked you!</h2>
+            {% if poked_by_total == 1 %}
+            <h2>{{ poked_by_total }} person poked you!</h2>
+            {% else %}
+            <h2>{{ poked_by_total }} people poked you!</h2>
+            {% endif %}
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -37,7 +41,11 @@
                         <td>{{ user.name }}</td>
                         <td>{{ user.alias }}</td>
                         <td>{{ user.email }}</td>
+                        {% if user.receiving_poke.count == 1 %}
+                        <td>{{ user.receiving_poke.count }} poke</td>
+                        {% else %}
                         <td>{{ user.receiving_poke.count }} pokes</td>
+                        {% endif %}
                         <td>
                             <form method="post" action="{% url 'pokes:poke' user_id=user.id %}">
                                 {% csrf_token %}
